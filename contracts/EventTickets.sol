@@ -107,7 +107,10 @@ contract EventTickets {
 
         myEvent.buyers[msg.sender] += numberOfTickets;
         myEvent.sales += numberOfTickets;
-        msg.sender.transfer(msg.value - TICKET_PRICE * numberOfTickets);
+
+        uint excessiveValue = msg.value - TICKET_PRICE * numberOfTickets;
+        if (excessiveValue > 0)
+        msg.sender.transfer(uint(excessiveValue));
         emit LogBuyTickets(msg.sender, numberOfTickets);
     }
     /*
